@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:chatroom/screens/ChatScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignInPage extends StatefulWidget {
@@ -27,8 +28,8 @@ class _SignInPageState extends State<SignInPage> {
               style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
-                  fontFamily: "Shantell Sans"),),
-
+                  fontFamily: "Shantell Sans"),
+            ),
             Form(
               key: loginFromKey,
               child: Column(
@@ -38,8 +39,7 @@ class _SignInPageState extends State<SignInPage> {
                     child: TextFormField(
                       decoration: InputDecoration(
                           hintText: "xyz@gmail.com",
-                          border: OutlineInputBorder()
-                      ),
+                          border: OutlineInputBorder()),
                       validator: (email) {
                         if (!email!.contains("@")) {
                           return "Invalid EmailID";
@@ -48,7 +48,6 @@ class _SignInPageState extends State<SignInPage> {
                         }
                       },
                       onSaved: (email) => emailId = email,
-
                     ),
                   ),
                   SizedBox(
@@ -59,9 +58,7 @@ class _SignInPageState extends State<SignInPage> {
                     child: TextFormField(
                       obscureText: true,
                       decoration: InputDecoration(
-                          hintText: "Password",
-                          border: OutlineInputBorder()
-                      ),
+                          hintText: "Password", border: OutlineInputBorder()),
                       validator: (password) {
                         if (password!.length < 8) {
                           return "Weak Password";
@@ -70,7 +67,6 @@ class _SignInPageState extends State<SignInPage> {
                         }
                       },
                       onSaved: (pass) => password = pass,
-
                     ),
                   ),
                   Padding(
@@ -78,16 +74,25 @@ class _SignInPageState extends State<SignInPage> {
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 150, vertical: 15)
-                        ),
-                        onPressed: () {
+                                horizontal: 150, vertical: 15)),
+                        onPressed: () async {
                           if (loginFromKey.currentState!.validate()) {
                             loginFromKey.currentState!.save();
                             print(emailId);
                             print(password);
-                            Navigator.of(context)
-                                .pushReplacement(
-                                MaterialPageRoute(builder: (_) => ChatScreen()));
+                            if (emailId != null && password != null) {
+                              FirebaseAuth auth = FirebaseAuth.instance;
+                              await auth
+                                  .createUserWithEmailAndPassword(
+                                      email: emailId!, password: password!)
+                                  .then((value) {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (_) => ChatScreen()));
+                              }).catchError((error){
+                                print(error);
+                              });
+                            }
                           }
                         },
                         child: Text("Login")),
@@ -96,8 +101,8 @@ class _SignInPageState extends State<SignInPage> {
               ),
             )
           ],
-        ),)
-      ,
+        ),
+      ),
     );
   }
 }
