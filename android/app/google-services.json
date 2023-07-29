@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "90763646120",
+    "project_id": "adypu-a1b25",
+    "storage_bucket": "adypu-a1b25.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90763646120:android:c384b60506753fc9fade9d",
+        "android_client_info": {
+          "package_name": "com.akshay.chatroom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90763646120-e3fc4p2l333bps6vsulftbk9du4lsl20.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuZcS7DPHw7YU68jId5JTuZalOKQyeEms"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90763646120-e3fc4p2l333bps6vsulftbk9du4lsl20.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
